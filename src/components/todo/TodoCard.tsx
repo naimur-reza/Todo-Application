@@ -3,18 +3,19 @@ import { Button } from "../ui/button";
 import { TrashIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import { useAppDispatch } from "@/redux/hooks";
 import { removeTodo, toggleComplete } from "@/redux/features/todoSlice";
+import { Badge } from "../ui/badge";
 
 const TodoCard = ({ id, title, description, isCompleted }: TTodo) => {
   const dispatch = useAppDispatch();
   return (
-    <div className="flex  justify-between items-center  p-3 rounded bg-white border">
+    <div className="flex  justify-between items-center  p-3 rounded  border">
       <input type="checkbox" onChange={() => dispatch(toggleComplete(id))} />
       <p className="font-semibold">{title}</p>
 
       {!isCompleted ? (
-        <p className="bg-green-500/50 rounded-full px-1">done</p>
+        <Badge variant="destructive">Pending</Badge>
       ) : (
-        <p className="bg-yellow-500/50 rounded-full px-1">pending</p>
+        <Badge variant="secondary">Done</Badge>
       )}
 
       <p>{description}</p>
