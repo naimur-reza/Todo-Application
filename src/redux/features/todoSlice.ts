@@ -21,7 +21,18 @@ export const todoSlice = createSlice({
     },
     toggleComplete: (state, action) => {
       const toggleTodo = state.todos.find((todo) => action.payload === todo.id);
-      if (toggleTodo) toggleTodo.isCompleted = !toggleTodo.isCompleted;
+      if (toggleTodo) {
+        toggleTodo.isCompleted = !toggleTodo.isCompleted;
+        state.todos.sort((a, b) => {
+          if (a.isCompleted === undefined || b.isCompleted === undefined) {
+            // Handle cases where isCompleted is undefined
+            return 0;
+          }
+
+          // Sort in ascending order based on the 'isCompleted' property
+          return a.isCompleted === b.isCompleted ? 0 : a.isCompleted ? -1 : 1;
+        });
+      }
     },
   },
 });
