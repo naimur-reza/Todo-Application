@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+
 import {
   Dialog,
   DialogClose,
@@ -10,14 +12,22 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { addTodo } from "@/redux/features/todoSlice";
+import { addTodo, removeTodo } from "@/redux/features/todoSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { FormEvent, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 export function AddTodoModal() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-
+  const [priority, setPriority] = useState("");
   const dispatch = useAppDispatch();
 
   const onSubmit = (e: FormEvent) => {
@@ -29,9 +39,17 @@ export function AddTodoModal() {
       id,
       title,
       description,
+      priority,
     };
 
     dispatch(addTodo(taskDetails));
+    toast(`${title} has been created.`, {
+      description: new Date().toLocaleString(),
+      action: {
+        label: "Undo",
+        onClick: () => dispatch(removeTodo(id)),
+      },
+    });
   };
 
   return (
@@ -67,6 +85,23 @@ export function AddTodoModal() {
               id="description"
               className="col-span-3"
             />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="description" className="text-right">
+              Priority
+            </Label>
+            <Select onValueChange={(e) => setPriority(e)}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Filter " />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="high">High</SelectItem>
+                  <SelectItem value="medium">Medium</SelectItem>
+                  <SelectItem value="low">Low</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
           <div className="flex justify-end">
             <DialogClose asChild>

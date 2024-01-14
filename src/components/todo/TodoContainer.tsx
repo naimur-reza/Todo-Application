@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/redux/hooks";
 import { AddTodoModal } from "./AddTodo";
 import TodoCard from "./TodoCard";
-import TodoFilter from "./TodoFilter";
+import { TodoFilter } from "./TodoFilter";
 
 const TodoContainer = () => {
   const { todos } = useAppSelector((state) => state.todoReducer);
@@ -14,7 +14,7 @@ const TodoContainer = () => {
         <TodoFilter />
       </div>
       <div className=" bg-primary-gradient p-0.5 rounded">
-        <div className="bg-black/ p-2 space-y-2">
+        <div className="bg-black/80 p-2 space-y-2">
           {todos.map((todo) => (
             <TodoCard key={todo.id} {...todo} />
           ))}

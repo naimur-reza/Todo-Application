@@ -5,7 +5,7 @@ import { useAppDispatch } from "@/redux/hooks";
 import { removeTodo, toggleComplete } from "@/redux/features/todoSlice";
 import { Badge } from "../ui/badge";
 
-const TodoCard = ({ id, title, description, isCompleted }: TTodo) => {
+const TodoCard = ({ id, title, description, isCompleted, priority }: TTodo) => {
   const dispatch = useAppDispatch();
   return (
     <div className="flex  justify-between items-center  p-3 rounded  border">
@@ -17,6 +17,7 @@ const TodoCard = ({ id, title, description, isCompleted }: TTodo) => {
       ) : (
         <Badge variant="secondary">Done</Badge>
       )}
+      <Badge variant="default">{priority}</Badge>
 
       <p>{description}</p>
 

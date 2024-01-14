@@ -1,26 +1,28 @@
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "../ui/button";
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { filterTodo } from "@/redux/features/todoSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
-const TodoFilter = () => {
+export function TodoFilter() {
+  const dispatch = useAppDispatch();
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Button variant={"outline"}>Filter Todo</Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>High</DropdownMenuItem>
-        <DropdownMenuItem>Medium</DropdownMenuItem>
-        <DropdownMenuItem>Low</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Select onValueChange={(e) => dispatch(filterTodo(e))}>
+      <SelectTrigger className="w-[180px]">
+        <SelectValue placeholder="Filter " />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectItem value="high">High</SelectItem>
+          <SelectItem value="medium">Medium</SelectItem>
+          <SelectItem value="low">Low</SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
-};
-
-export default TodoFilter;
+}
