@@ -8,18 +8,27 @@ import { Badge } from "../ui/badge";
 const TodoCard = ({ id, title, description, isCompleted, priority }: TTodo) => {
   const dispatch = useAppDispatch();
   return (
-    <div className="flex  justify-between items-center  p-3 rounded  border">
+    <div className="flex  justify-between   items-center gap-5 p-3 rounded  border">
       <input type="checkbox" onChange={() => dispatch(toggleComplete(id))} />
-      <p className="font-semibold">{title}</p>
+      <p className="font-semibold flex-1">{title}</p>
 
       {!isCompleted ? (
         <Badge variant="destructive">Pending</Badge>
       ) : (
         <Badge variant="secondary">Done</Badge>
       )}
-      <Badge variant="default">{priority}</Badge>
+      <Badge
+        className={`${
+          priority === "high"
+            ? "bg-red-500"
+            : priority === "low"
+            ? "bg-white"
+            : "bg-yellow-500"
+        } `}>
+        {priority}
+      </Badge>
 
-      <p>{description}</p>
+      <p className="flex-[2]">{description}</p>
 
       <div className="space-x-3">
         <Button
