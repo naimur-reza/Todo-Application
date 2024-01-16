@@ -1,15 +1,26 @@
 import { TTodo } from "@/types/TodoType";
 import { Button } from "../ui/button";
 import { TrashIcon, Pencil1Icon } from "@radix-ui/react-icons";
-import { useAppDispatch } from "@/redux/hooks";
-import { removeTodo, toggleComplete } from "@/redux/features/todoSlice";
+// import { useAppDispatch } from "@/redux/hooks";
+// import { removeTodo, toggleComplete } from "@/redux/features/todoSlice";
 import { Badge } from "../ui/badge";
+import { useDeleteTodoMutation } from "@/redux/api/api";
 
-const TodoCard = ({ id, title, description, isCompleted, priority }: TTodo) => {
-  const dispatch = useAppDispatch();
+const TodoCard = ({
+  _id,
+  title,
+  description,
+  isCompleted,
+  priority,
+}: TTodo) => {
+  // for local state management
+  // const dispatch = useAppDispatch();
+
+  const [deleteTodo] = useDeleteTodoMutation(undefined);
+
   return (
     <div className="flex  justify-between   items-center gap-5 p-3 rounded  border">
-      <input type="checkbox" onChange={() => dispatch(toggleComplete(id))} />
+      <input type="checkbox" onChange={() => deleteTodo(_id)} />
       <p className="font-semibold flex-1">{title}</p>
 
       {!isCompleted ? (
@@ -32,7 +43,7 @@ const TodoCard = ({ id, title, description, isCompleted, priority }: TTodo) => {
 
       <div className="space-x-3">
         <Button
-          onClick={() => dispatch(removeTodo(id))}
+          onClick={() => deleteTodo(_id)}
           className="bg-red-500 hover:bg-red-600">
           <TrashIcon />
         </Button>

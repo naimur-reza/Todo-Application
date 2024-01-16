@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { addTodo, removeTodo } from "@/redux/features/todoSlice";
-import { useAppDispatch } from "@/redux/hooks";
+// import { addTodo, removeTodo } from "@/redux/features/todoSlice";
+// import { useAppDispatch } from "@/redux/hooks";
 import { FormEvent, useState } from "react";
 import {
   Select,
@@ -23,31 +23,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { useAddTodoMutation } from "@/redux/api/api";
 
-export function AddTodoModal() {
+export function AddTodo() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("");
-  const dispatch = useAppDispatch();
+
+  // ==> for local state management
+  // const dispatch = useAppDispatch();
+
+  const [addTodo] = useAddTodoMutation();
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    const id = Math.ceil(Math.random() * 1000);
-
     const taskDetails = {
-      id,
       title,
       description,
       priority,
     };
 
-    dispatch(addTodo(taskDetails));
+    addTodo(taskDetails);
+
     toast(`${title} has been created.`, {
       description: new Date().toLocaleString(),
       action: {
         label: "Undo",
-        onClick: () => dispatch(removeTodo(id)),
+        onClick: () => "",
       },
     });
   };

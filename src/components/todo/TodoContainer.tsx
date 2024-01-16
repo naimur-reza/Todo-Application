@@ -1,8 +1,10 @@
 // import { useAppSelector } from "@/redux/hooks";
-import { AddTodoModal } from "./AddTodo";
+import { TTodo } from "@/types/TodoType";
+
 import TodoCard from "./TodoCard";
 import { TodoFilter } from "./TodoFilter";
 import { useGetAllTodosQuery } from "@/redux/api/api";
+import { AddTodo } from "./AddTodo";
 
 const TodoContainer = () => {
   // from local state
@@ -18,12 +20,13 @@ const TodoContainer = () => {
     <div>
       <h1 className="text-center my-5">My Todo</h1>
       <div className="flex justify-between my-3 ">
-        <AddTodoModal />
+        <AddTodo />
         <TodoFilter />
       </div>
       <div className=" bg-primary-gradient p-0.5 rounded">
         <div className="bg-black/80 p-2 space-y-2">
-          {todos && todos.map((todo) => <TodoCard key={todo.id} {...todo} />)}
+          {todos &&
+            todos.map((todo: TTodo) => <TodoCard key={todo._id} {...todo} />)}
         </div>
       </div>
     </div>
