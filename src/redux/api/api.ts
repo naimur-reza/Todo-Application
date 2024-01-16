@@ -7,7 +7,17 @@ export const todosApi = createApi({
   tagTypes: ["Todos"],
   endpoints: (builder) => ({
     getAllTodos: builder.query({
-      query: () => `/todos`,
+      query: (priority) => {
+        const params = new URLSearchParams();
+
+        if (priority) params.append("priority", priority);
+
+        return {
+          url: `/todos`,
+          method: "GET",
+          params,
+        };
+      },
       providesTags: ["Todos"],
     }),
     addTodo: builder.mutation({

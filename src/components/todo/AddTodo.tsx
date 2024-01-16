@@ -23,7 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { useAddTodoMutation } from "@/redux/api/api";
+import { useAddTodoMutation, useDeleteTodoMutation } from "@/redux/api/api";
 
 export function AddTodo() {
   const [title, setTitle] = useState("");
@@ -34,6 +34,7 @@ export function AddTodo() {
   // const dispatch = useAppDispatch();
 
   const [addTodo] = useAddTodoMutation();
+  // const [deleteTodo] = useDeleteTodoMutation(undefined)
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -50,7 +51,7 @@ export function AddTodo() {
       description: new Date().toLocaleString(),
       action: {
         label: "Undo",
-        onClick: () => "",
+        onClick: () => "deleteTodo(_id)",
       },
     });
   };
