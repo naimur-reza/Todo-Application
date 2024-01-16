@@ -4,7 +4,7 @@ import { TrashIcon, Pencil1Icon } from "@radix-ui/react-icons";
 // import { useAppDispatch } from "@/redux/hooks";
 // import { removeTodo, toggleComplete } from "@/redux/features/todoSlice";
 import { Badge } from "../ui/badge";
-import { useDeleteTodoMutation } from "@/redux/api/api";
+import { useDeleteTodoMutation, useUpdateTodoMutation } from "@/redux/api/api";
 
 const TodoCard = ({
   _id,
@@ -17,10 +17,19 @@ const TodoCard = ({
   // const dispatch = useAppDispatch();
 
   const [deleteTodo] = useDeleteTodoMutation(undefined);
+  const [updateTodo] = useUpdateTodoMutation();
+
+  const handleUpdate = () => {
+    const data = {
+      isCompleted: !isCompleted,
+    };
+
+    updateTodo({ id: _id, data });
+  };
 
   return (
     <div className="flex  justify-between   items-center gap-5 p-3 rounded  border">
-      <input type="checkbox" onChange={() => deleteTodo(_id)} />
+      <input type="checkbox" onChange={handleUpdate} />
       <p className="font-semibold flex-1">{title}</p>
 
       {!isCompleted ? (
